@@ -6,17 +6,15 @@ using System.Text.Json.Serialization;
 
 namespace RoflanBobus
 {
-    public partial class InfoTour
+    public partial class LivingTour
     {
-        public InfoTour()
+        public LivingTour()
         {
             Tours = new HashSet<Tour>();
         }
 
         public int Id { get; set; }
-        public string GeneralInformation { get; set; }
-        public string HotInformation { get; set; }
-        public string AdditionalInformation { get; set; }
+        public string Title { get; set; }
         [JsonIgnore]
         public virtual ICollection<Tour> Tours { get; set; }
     }

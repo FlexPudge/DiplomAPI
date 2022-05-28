@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,7 +24,12 @@ namespace RoflanBobus.Controllers
         [HttpGet("Tour")]
         public async Task<List<Tour>> GetTours()
         {
-            return await db.Tours.ToListAsync();
+            return await db.Tours.Include(x=> x.IdlivingTourNavigation).Include(x=>x.IdprogrammTourNavigation).Include(x=>x.IdtourInfoNavigation).ToListAsync();
+        }
+        [HttpGet("Favorite")]
+        public async Task<List<Favorite>> GetFavorite()
+        {
+            return await db.Favorites.Include(x => x.IdtoursNavigation).ToListAsync();
         }
 
         [HttpGet("Login.login={login}.password={password}")]
@@ -35,7 +41,7 @@ namespace RoflanBobus.Controllers
         }
 
         [HttpPost("AddVoucher")]
-        public async Task<Voucher> GetVoucherAsync([FromBody] Voucher voucher)
+        public async Task<Voucher> PostVoucherAsync([FromBody] Voucher voucher)
         {
             try
             {
@@ -43,9 +49,26 @@ namespace RoflanBobus.Controllers
                 await db.SaveChangesAsync();
                 return voucher;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
+            }
+        }
+
+        [HttpPost("AddFavorite")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Favorite))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult PostFavoriteAsync([FromBody] Favorite favorite)
+        {
+            try
+            {
+                db.Favorites.AddAsync(favorite);
+                db.SaveChangesAsync();
+                return Ok("Все сохранено");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 

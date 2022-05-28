@@ -20,8 +20,10 @@ namespace RoflanBobus
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<InfoTour> InfoTours { get; set; }
+        public virtual DbSet<LivingTour> LivingTours { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<OptionsTour> OptionsTours { get; set; }
+        public virtual DbSet<ProgrammTour> ProgrammTours { get; set; }
         public virtual DbSet<Tour> Tours { get; set; }
         public virtual DbSet<TypeTour> TypeTours { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
@@ -31,7 +33,6 @@ namespace RoflanBobus
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=GLEK-PC\\GLADSERVER;Initial Catalog=SmolenskTravel;integrated security=True;");
             }
         }
@@ -83,8 +84,13 @@ namespace RoflanBobus
             modelBuilder.Entity<InfoTour>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+            });
 
-                entity.Property(e => e.Idtour).HasColumnName("IDTour");
+            modelBuilder.Entity<LivingTour>(entity =>
+            {
+                entity.ToTable("LivingTour");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
             });
 
             modelBuilder.Entity<Option>(entity =>
@@ -112,11 +118,26 @@ namespace RoflanBobus
                     .HasConstraintName("FK_OptionsTour_Options");
             });
 
+            modelBuilder.Entity<ProgrammTour>(entity =>
+            {
+                entity.ToTable("ProgrammTour");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+            });
+
             modelBuilder.Entity<Tour>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Date).HasColumnType("date");
+
                 entity.Property(e => e.Duration).HasMaxLength(50);
+
+                entity.Property(e => e.IdlivingTour).HasColumnName("IDLivingTour");
+
+                entity.Property(e => e.IdprogrammTour).HasColumnName("IDProgrammTour");
+
+                entity.Property(e => e.IdtourInfo).HasColumnName("IDTourInfo");
 
                 entity.Property(e => e.Image).HasColumnType("image");
 
@@ -125,6 +146,21 @@ namespace RoflanBobus
                 entity.Property(e => e.Price).HasMaxLength(50);
 
                 entity.Property(e => e.TypeTour).HasMaxLength(50);
+
+                entity.HasOne(d => d.IdlivingTourNavigation)
+                    .WithMany(p => p.Tours)
+                    .HasForeignKey(d => d.IdlivingTour)
+                    .HasConstraintName("FK_Tours_LivingTour");
+
+                entity.HasOne(d => d.IdprogrammTourNavigation)
+                    .WithMany(p => p.Tours)
+                    .HasForeignKey(d => d.IdprogrammTour)
+                    .HasConstraintName("FK_Tours_ProgrammTour");
+
+                entity.HasOne(d => d.IdtourInfoNavigation)
+                    .WithMany(p => p.Tours)
+                    .HasForeignKey(d => d.IdtourInfo)
+                    .HasConstraintName("FK_Tours_InfoTours");
             });
 
             modelBuilder.Entity<TypeTour>(entity =>
