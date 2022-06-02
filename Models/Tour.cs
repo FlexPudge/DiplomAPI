@@ -13,7 +13,6 @@ namespace RoflanBobus
             Favorites = new HashSet<Favorite>();
             Vouchers = new HashSet<Voucher>();
         }
-
         public int Id { get; set; }
         public string Title { get; set; }
         public string TypeTour { get; set; }
