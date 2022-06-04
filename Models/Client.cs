@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -19,7 +20,9 @@ namespace RoflanBobus
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Voucher> Vouchers { get; set; }
     }
 }

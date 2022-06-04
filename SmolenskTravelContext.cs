@@ -17,17 +17,14 @@ namespace RoflanBobus
         {
         }
 
+        public virtual DbSet<AboutPhoto> AboutPhotos { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<InfoTour> InfoTours { get; set; }
         public virtual DbSet<LivingTour> LivingTours { get; set; }
-        public virtual DbSet<Option> Options { get; set; }
-        public virtual DbSet<OptionsTour> OptionsTours { get; set; }
         public virtual DbSet<ProgrammTour> ProgrammTours { get; set; }
         public virtual DbSet<Tour> Tours { get; set; }
-        public virtual DbSet<TypeTour> TypeTours { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
-        public virtual DbSet<staff> staff { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,6 +37,18 @@ namespace RoflanBobus
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
+
+            modelBuilder.Entity<AboutPhoto>(entity =>
+            {
+                entity.ToTable("AboutPhoto");
+
+                entity.Property(e => e.Photo).HasColumnType("image");
+
+                entity.HasOne(d => d.IdTourNavigation)
+                    .WithMany(p => p.AboutPhotos)
+                    .HasForeignKey(d => d.IdTour)
+                    .HasConstraintName("FK_AboutPhoto_Tours");
+            });
 
             modelBuilder.Entity<Client>(entity =>
             {
@@ -93,31 +102,6 @@ namespace RoflanBobus
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
 
-            modelBuilder.Entity<Option>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Price).HasMaxLength(50);
-
-                entity.Property(e => e.Title).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<OptionsTour>(entity =>
-            {
-                entity.ToTable("OptionsTour");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Idoptions).HasColumnName("IDOptions");
-
-                entity.Property(e => e.Idtour).HasColumnName("IDTour");
-
-                entity.HasOne(d => d.IdoptionsNavigation)
-                    .WithMany(p => p.OptionsTours)
-                    .HasForeignKey(d => d.Idoptions)
-                    .HasConstraintName("FK_OptionsTour_Options");
-            });
-
             modelBuilder.Entity<ProgrammTour>(entity =>
             {
                 entity.ToTable("ProgrammTour");
@@ -163,15 +147,6 @@ namespace RoflanBobus
                     .HasConstraintName("FK_Tours_InfoTours");
             });
 
-            modelBuilder.Entity<TypeTour>(entity =>
-            {
-                entity.ToTable("TypeTour");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Title).HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Voucher>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -191,25 +166,6 @@ namespace RoflanBobus
                     .WithMany(p => p.Vouchers)
                     .HasForeignKey(d => d.Idtours)
                     .HasConstraintName("FK_Vouchers_Tours");
-            });
-
-            modelBuilder.Entity<staff>(entity =>
-            {
-                entity.ToTable("Staff");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Email).HasMaxLength(50);
-
-                entity.Property(e => e.Fio)
-                    .HasMaxLength(50)
-                    .HasColumnName("FIO");
-
-                entity.Property(e => e.Login).HasMaxLength(50);
-
-                entity.Property(e => e.Password).HasMaxLength(50);
-
-                entity.Property(e => e.Phone).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

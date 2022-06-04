@@ -24,20 +24,21 @@ namespace RoflanBobus
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddJsonOptions
-                (
-                options =>
-                {
-                    options.JsonSerializerOptions.MaxDepth = 4;
-                }
-                );
-                
-            
-           // services.AddMvc()
-             //   .AddJsonOptions
-             //   (
-             //   options => options.JsonSerializerOptions.Ref = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-             //   );
+            services.AddControllers().AddNewtonsoftJson(options =>
+   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+/*services.AddControllers().AddJsonOptions
+    (
+    options =>
+    {
+        options.JsonSerializerOptions.MaxDepth = 4;
+    }
+    );*/
+
+
+);
+
+
+
         }
 
         public void Service()

@@ -10,9 +10,11 @@ namespace RoflanBobus
     {
         public Tour()
         {
+            AboutPhotos = new HashSet<AboutPhoto>();
             Favorites = new HashSet<Favorite>();
             Vouchers = new HashSet<Voucher>();
         }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string TypeTour { get; set; }
@@ -27,9 +29,12 @@ namespace RoflanBobus
         public int? IdtourInfo { get; set; }
         public int? IdprogrammTour { get; set; }
         public int? IdlivingTour { get; set; }
+
         public virtual LivingTour IdlivingTourNavigation { get; set; }
         public virtual ProgrammTour IdprogrammTourNavigation { get; set; }
         public virtual InfoTour IdtourInfoNavigation { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<AboutPhoto> AboutPhotos { get; set; }
         [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
         [JsonIgnore]
