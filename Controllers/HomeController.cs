@@ -20,7 +20,26 @@ namespace RoflanBobus.Controllers
         {
             return await db.Clients.ToListAsync();
         }
+        [HttpPost("Registration")]
+        public async Task<IActionResult> PostRegistration([FromBody] Client client)
+        {
+            try
+            {
+                await db.Clients.AddAsync(client);
+                return Ok(200);
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(ex.Message);
+            }
+            
+        }
+        [HttpGet("Passport")]
+        public async Task<List<Idpassport>> GetPassport()
+        {
+            return await db.Idpassports.Include(x => x.Idpassport1Navigation).Include(x => x.IdzagranPassportNavigation).ToListAsync();
+        }
         [HttpGet("Login.login={login}.password={password}")]
         public async Task<Client> GetUser([FromRoute] string login, [FromRoute] string password)
         {
@@ -31,19 +50,9 @@ namespace RoflanBobus.Controllers
         [HttpGet("Tour")]
         public async Task<List<Tour>> GetTours()
         {
-
-            //поделить на несколько частей 
-            //когда загружаешь список туров просто выводить таблицу тур
-            //при просмотре дополнительной информации о нем подгружать информацию по нему 
-            // если грузить все сразу то json весит 200 мб 
-
-            //return await db.AboutPhotos.Include(x=> x.IdTourNavigation)
-            // .ToListAsync();
-
             return await db.Tours.Include(x => x.IdlivingTourNavigation)
                 .Include(x => x.IdprogrammTourNavigation).Include(x => x.IdtourInfoNavigation).ToListAsync();
         }
-
         [HttpPost("AddVoucher")]
         public async Task<Voucher> PostVoucherAsync([FromBody] Voucher voucher)
         {
@@ -58,28 +67,25 @@ namespace RoflanBobus.Controllers
                 return null;
             }
         }
-
         [HttpGet("Voucher")]
         public async Task<List<Voucher>> GetVoucher()
         {
             return await db.Vouchers.Include(x => x.IdtoursNavigation).ToListAsync();
         }
-
         [HttpGet("Favorite")]
         public async Task<List<Favorite>> GetFavorite()
         {
             return await db.Favorites.Include(x => x.IdtoursNavigation).ToListAsync();
         }
-
         [HttpPost("AddFavorite")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Favorite))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult PostFavoriteAsync([FromBody] Favorite favorite)
+        public async Task<IActionResult> PostFavoriteAsync([FromBody] Favorite favorite)
         {
             try
             {
-                db.Favorites.AddAsync(favorite);
-                db.SaveChangesAsync();
+               await db.Favorites.AddAsync(favorite);
+               await db.SaveChangesAsync();
                 return Ok("Все сохранено");
             }
             catch (Exception ex)
@@ -87,7 +93,6 @@ namespace RoflanBobus.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpPost("DeleteFavorite")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -104,7 +109,6 @@ namespace RoflanBobus.Controllers
                 return null;
             }
         }
-
         [HttpGet("LoadAboutPhoto.id={id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -120,8 +124,5 @@ namespace RoflanBobus.Controllers
                 return null;
             }
         }
-
-       
-
     }
 }

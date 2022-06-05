@@ -15,6 +15,7 @@ namespace RoflanBobus
 
         public int Id { get; set; }
         public string Title { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<Tour> Tours { get; set; }
     }

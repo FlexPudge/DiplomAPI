@@ -20,11 +20,14 @@ namespace RoflanBobus
         public virtual DbSet<AboutPhoto> AboutPhotos { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
+        public virtual DbSet<Idpassport> Idpassports { get; set; }
         public virtual DbSet<InfoTour> InfoTours { get; set; }
         public virtual DbSet<LivingTour> LivingTours { get; set; }
+        public virtual DbSet<Passport> Passports { get; set; }
         public virtual DbSet<ProgrammTour> ProgrammTours { get; set; }
         public virtual DbSet<Tour> Tours { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
+        public virtual DbSet<ZagranPassport> ZagranPassports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -54,6 +57,8 @@ namespace RoflanBobus
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.BankCard).HasMaxLength(50);
+
                 entity.Property(e => e.Email).HasMaxLength(50);
 
                 entity.Property(e => e.Fio)
@@ -61,6 +66,8 @@ namespace RoflanBobus
                     .HasColumnName("FIO");
 
                 entity.Property(e => e.Gender).HasMaxLength(50);
+
+                entity.Property(e => e.Idpassport).HasColumnName("IDPassport");
 
                 entity.Property(e => e.Login).HasMaxLength(50);
 
@@ -90,6 +97,34 @@ namespace RoflanBobus
                     .HasConstraintName("FK_Favorite_Tours");
             });
 
+            modelBuilder.Entity<Idpassport>(entity =>
+            {
+                entity.ToTable("IDPassport");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Idclient).HasColumnName("IDClient");
+
+                entity.Property(e => e.Idpassport1).HasColumnName("IDPassport");
+
+                entity.Property(e => e.IdzagranPassport).HasColumnName("IDZagranPassport");
+
+                entity.HasOne(d => d.IdclientNavigation)
+                    .WithMany(p => p.Idpassports)
+                    .HasForeignKey(d => d.Idclient)
+                    .HasConstraintName("FK_IDPassport_Clients");
+
+                entity.HasOne(d => d.Idpassport1Navigation)
+                    .WithMany(p => p.Idpassports)
+                    .HasForeignKey(d => d.Idpassport1)
+                    .HasConstraintName("FK_IDPassport_Passport");
+
+                entity.HasOne(d => d.IdzagranPassportNavigation)
+                    .WithMany(p => p.Idpassports)
+                    .HasForeignKey(d => d.IdzagranPassport)
+                    .HasConstraintName("FK_IDPassport_ZagranPassport");
+            });
+
             modelBuilder.Entity<InfoTour>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -100,6 +135,27 @@ namespace RoflanBobus
                 entity.ToTable("LivingTour");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
+            });
+
+            modelBuilder.Entity<Passport>(entity =>
+            {
+                entity.ToTable("Passport");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DateBirthday).HasColumnType("date");
+
+                entity.Property(e => e.DateOfIssue).HasColumnType("date");
+
+                entity.Property(e => e.Gender).HasMaxLength(1);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Number).HasMaxLength(10);
             });
 
             modelBuilder.Entity<ProgrammTour>(entity =>
@@ -166,6 +222,29 @@ namespace RoflanBobus
                     .WithMany(p => p.Vouchers)
                     .HasForeignKey(d => d.Idtours)
                     .HasConstraintName("FK_Vouchers_Tours");
+            });
+
+            modelBuilder.Entity<ZagranPassport>(entity =>
+            {
+                entity.ToTable("ZagranPassport");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Citizenship).HasMaxLength(50);
+
+                entity.Property(e => e.DateBirthday).HasColumnType("date");
+
+                entity.Property(e => e.Gender).HasMaxLength(1);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Number).HasMaxLength(50);
+
+                entity.Property(e => e.Srok)
+                    .HasMaxLength(10)
+                    .IsFixedLength(true);
             });
 
             OnModelCreatingPartial(modelBuilder);
