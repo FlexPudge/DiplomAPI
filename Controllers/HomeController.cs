@@ -26,6 +26,7 @@ namespace RoflanBobus.Controllers
             try
             {
                 await db.Clients.AddAsync(client);
+                await db.SaveChangesAsync();
                 return Ok(200);
             }
             catch (Exception ex)
