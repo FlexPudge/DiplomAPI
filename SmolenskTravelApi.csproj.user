@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>RoflanBobus</ActiveDebugProfile>
+    <ActiveDebugProfile>SmolenskTravelApi</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

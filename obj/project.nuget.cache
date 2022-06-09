@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+DIrsAonnzGcxyNspppkk4OBo9uil0bZ5vsbgatL5iQTuhVrFjgkfe7K1nbQCzN46koZdLp2rU33kgi2fuzsYQ==",
+  "dgSpecHash": "dnfD5jIq7QhYA5ssWj4ALlRVckNfLFZ9LvYl2xcKRvbT272uxNiL60WaqJAGOih/3jiYBg4gVC+nNST+ymOAqA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Misha\\Desktop\\RoflanBobus\\RoflanBobus.csproj",
+  "projectFilePath": "C:\\Users\\Misha\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Misha\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Misha\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.23\\microsoft.aspnetcore.jsonpatch.3.1.23.nupkg.sha512",

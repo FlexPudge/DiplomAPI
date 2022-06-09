@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace RoflanBobus
+namespace SmolenskTravelApi
 {
     public partial class AboutPhoto
     {

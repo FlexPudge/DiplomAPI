@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RoflanBobus
+namespace SmolenskTravelApi
 {
     public class Program
     {

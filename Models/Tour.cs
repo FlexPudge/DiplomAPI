@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 #nullable disable
 
-namespace RoflanBobus
+namespace SmolenskTravelApi
 {
     public partial class Tour
     {

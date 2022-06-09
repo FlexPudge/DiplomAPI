@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace RoflanBobus
+namespace SmolenskTravelApi
 {
     public partial class SmolenskTravelContext : DbContext
     {
