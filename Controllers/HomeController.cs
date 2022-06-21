@@ -34,7 +34,7 @@ namespace SmolenskTravelApi.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
         }
         [HttpGet("Passport")]
         public async Task<List<Idpassport>> GetPassport()
@@ -54,6 +54,12 @@ namespace SmolenskTravelApi.Controllers
             return await db.Tours.Include(x => x.IdlivingTourNavigation)
                 .Include(x => x.IdprogrammTourNavigation).Include(x => x.IdtourInfoNavigation).ToListAsync();
         }
+        [HttpGet("Tour.id={id}")]
+        public async Task<Tour> GetToursId([FromRoute] int id)
+        {
+            return await db.Tours.Include(x => x.IdlivingTourNavigation)
+                .Include(x => x.IdprogrammTourNavigation).Include(x => x.IdtourInfoNavigation).FirstOrDefaultAsync(x => x.Id == id);
+        }
         [HttpPost("AddVoucher")]
         public async Task<Voucher> PostVoucherAsync([FromBody] Voucher voucher)
         {
@@ -67,6 +73,20 @@ namespace SmolenskTravelApi.Controllers
             {
                 return null;
             }
+        }
+        [HttpDelete("DeleteVoucher.id={id}")]
+        public async Task<ActionResult<Voucher>> DeleteEmployee([FromRoute]int id)
+        {
+            var result = await db.Vouchers
+            .FirstOrDefaultAsync(e => e.Id == id);
+            if (result != null)
+            {
+                db.Vouchers.Remove(result);
+                await db.SaveChangesAsync();
+                return result;
+            }
+
+            return null;
         }
         [HttpGet("Voucher")]
         public async Task<List<Voucher>> GetVoucher()
@@ -85,8 +105,8 @@ namespace SmolenskTravelApi.Controllers
         {
             try
             {
-               await db.Favorites.AddAsync(favorite);
-               await db.SaveChangesAsync();
+                await db.Favorites.AddAsync(favorite);
+                await db.SaveChangesAsync();
                 return Ok("Все сохранено");
             }
             catch (Exception ex)
