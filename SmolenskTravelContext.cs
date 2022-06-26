@@ -33,7 +33,9 @@ namespace SmolenskTravelApi
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=GLEK-PC\\GLADSERVER;Initial Catalog=SmolenskTravel;integrated security=True;");
+                //optionsBuilder.UseSqlServer("Data Source = 169.254.131.3; user = stud; password = Qwerty123456$; Initial Catalog = SmolenskTravel; ");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-R3QCK61;Initial Catalog=SmolenskTravel;integrated security=True;");
+
             }
         }
 

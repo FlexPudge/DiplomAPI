@@ -5500,25 +5500,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Misha\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\FlexPudge\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Misha\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi.csproj",
+      "projectUniqueName": "C:\\Users\\FlexPudge\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi\\SmolenskTravelApi.csproj",
       "projectName": "SmolenskTravelApi",
-      "projectPath": "C:\\Users\\Misha\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi.csproj",
-      "packagesPath": "C:\\Users\\Misha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Misha\\Desktop\\SmolenskTravelApi\\obj\\",
+      "projectPath": "C:\\Users\\FlexPudge\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi\\SmolenskTravelApi.csproj",
+      "packagesPath": "C:\\Users\\FlexPudge\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\FlexPudge\\Desktop\\SmolenskTravelApi\\SmolenskTravelApi\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Misha\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\FlexPudge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5590,7 +5585,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

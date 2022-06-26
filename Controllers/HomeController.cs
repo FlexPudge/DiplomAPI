@@ -75,7 +75,7 @@ namespace SmolenskTravelApi.Controllers
             }
         }
         [HttpDelete("DeleteVoucher.id={id}")]
-        public async Task<ActionResult<Voucher>> DeleteEmployee([FromRoute]int id)
+        public async Task<ActionResult<Voucher>> DeleteEmployee([FromRoute] int id)
         {
             var result = await db.Vouchers
             .FirstOrDefaultAsync(e => e.Id == id);
@@ -99,14 +99,23 @@ namespace SmolenskTravelApi.Controllers
             return await db.Favorites.Include(x => x.IdtoursNavigation).ToListAsync();
         }
         [HttpPost("AddFavorite")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Favorite))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PostFavoriteAsync([FromBody] Favorite favorite)
         {
             try
             {
-                await db.Favorites.AddAsync(favorite);
-                await db.SaveChangesAsync();
+                var check = db.Favorites.Where(x => x.Idclient == favorite.Idclient && x.Idtours == favorite.Idtours).ToList();
+                if (check.Count == 0)
+                {
+                    await db.Favorites.AddAsync(favorite);
+                    await db.SaveChangesAsync();
+                    return Ok("Новое поступление в ламоду");
+                }
+                if (check.Count != 0)
+                {
+                    return Ok("Ага блин повторяшка");
+                }
                 return Ok("Все сохранено");
             }
             catch (Exception ex)
